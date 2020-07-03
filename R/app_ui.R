@@ -4,8 +4,6 @@
 #'     DO NOT REMOVE.
 #' @import shiny
 #' 
-#' @import shinyWidgets
-#' 
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -13,11 +11,17 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # List the first level UI elements here 
     fluidPage(
-      mod_main_page_v2_ui("main_page_v2_ui_1"),
+      shinyjs::useShinyjs(),
       # Change background color
-      shinyWidgets::setBackgroundColor(
-        color = c("#ecf0f1")
-      )
+      shinyWidgets::setBackgroundColor(color = "#ecf0f1"),
+      
+      # Loading screen
+      tags$div(id = "loading_screen",
+               tags$h1("Loading...")),
+      
+      # Main module
+      shinyjs::hidden(tags$div(id = "main_content",
+                      mod_main_page_v2_ui("main_page_v2_ui_1"))),
     )
   )
 }
